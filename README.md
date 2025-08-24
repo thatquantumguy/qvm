@@ -1,7 +1,7 @@
 # Universal Seed‑Frame Protocol
 
 ## Quantum Virtual Machine Conceptual Disclosure  
-**Author:** ThatQuantumGuy  
+**Author:** thatquantumguy  
 **Date:** 24 Aug 2025  
 
 ---
@@ -69,3 +69,9 @@ This disclosure describes a deterministic, infinitely scalable simulation substr
 ## Intended Use
 
 This QVM model serves as the technical foundation for the second‑generation release of my existing game platform, targeted for public launch in approximately one year. The same substrate is adaptable to research simulations, distributed virtual worlds, and any domain requiring high‑fidelity, low‑cost synchronization of complex states across endpoints.  Future implementations will be developed under a transparent and collaborative open-source model. The project will be openly licensed under the Apache 2.0 license, inviting and encouraging contributions from the broader community to collectively drive its innovation.
+
+
+---
+
+© 2025 thatquantumguy. This README and all contents of this repository are licensed under the Apache License, Version 2.0.  
+See the [LICENSE](./LICENSE) file for full terms.
