@@ -68,8 +68,15 @@ This disclosure describes a deterministic, infinitely scalable simulation substr
 
 ## Intended Use
 
-This QVM model serves as the technical foundation for the second‑generation release of my existing game platform, targeted for public launch in approximately one year. The same substrate is adaptable to research simulations, distributed virtual worlds, and any domain requiring high‑fidelity, low‑cost synchronization of complex states across endpoints.  Future implementations will be developed under a transparent and collaborative open-source model. The project will be openly licensed under the Apache 2.0 license, inviting and encouraging contributions from the broader community to collectively drive its innovation.
+This QVM model serves as the technical foundation for an in-development game platform, targeted for public launch in approximately one year. The same substrate is adaptable to research simulations, distributed virtual worlds, and any domain requiring high‑fidelity, low‑cost synchronization of complex states across endpoints.  Future implementations will be developed under a transparent and collaborative open-source model. The project will be openly licensed under the Apache 2.0 license, inviting and encouraging contributions from the broader community to collectively drive its innovation.
 
+
+---
+
+## Terminology Note:
+
+The term “QVM” is used here as a generic descriptor for a quantum virtual machine architecture.  
+It is not intended to refer to any specific commercial product or trademark.  
 
 ---
 
