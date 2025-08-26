@@ -13,7 +13,7 @@ View‑volume‑driven occlusion culling, omnidirectional perspective projection
 
 1. **Occlusion / Selection** – Determine which entities, surfaces, or volumetric regions are relevant to the current observer context.  
 2. **Perspective Projection** – Transform those selections into a normalized cube‑map — a discrete representation of a spherical probe — producing bounded, observer‑centric viewpoints.
-3. **Metadata Derivation** – Extract volumetric material subscripts, server‑sent environmental lighting data, viewpoint relative per‑face normals, and the underlying geometric topology of the to‑be‑rendered scene.  
+3. **Metadata Derivation** – Extract volumetric material subscripts, server‑side environmental lighting data, viewpoint relative per‑face normals, and the underlying geometric topology of the to‑be‑rendered scene.  
 4. **Packaging** – Compile, compress, and package this data into a network‑efficient form.  
 5. **Networking** – Collate and batch transmit render manifests for all clients at a consistent rate, preferring UDP where possible.
 
@@ -46,22 +46,21 @@ It’s designed for clarity at a glance, ensuring each side’s authority and du
 | Derive metadata (material subscripts, lighting data, normals, topology) from selected geometry. | Control local pitch, yaw, and roll for immediate camera responsiveness. |
 | Compile, compress, and package rendering manifests into a network‑efficient form. | Resolve server‑provided indices into local assets and shader parameters. |
 | Collate and batch transmit manifests at a consistent rate, preferring UDP where possible. | Relay local orientation, clipping, interpolation and other input state to the server’s predictive handler. |
-| Remain authoritative over simulation truth and validate all client inputs. | Render the scene as metadata derived, CPU generated meshes without altering simulation truth. |
+| Remain authoritative over simulation truth and validate all client inputs. | Render the scene as metadata derived, CPU generated 2D topology without altering simulation truth. |
 
 ---
 
 ### Visualizing a Clipped Rendering Manifest
 
-You can picture a **clipped** rendering manifest by starting with a photograph — or better yet, a painting — and then reducing it to the minimum viable metadata needed to drive shaders.
+You can picture a clipped rendering manifest by starting with a photograph — or better yet, a painting — and then reducing it to the minimum viable metadata needed to drive shaders.
 
 On the client:
 
-- **Vertex shaders** ingest CPU‑generated 2D meshes that cover the client‑local world space in a planar fashion.  
-  Think of it as a mural: a flat surface subdivided by targeted shader type, onto which the scene will be painted. 
-- **Fragment shaders** then “paint” onto this mural using volumetric textures, with HDRI-like lighting.
-- The result is passed through an orthographic projection in an otherwise ordinary 2D graphics pipeline.
+- **Vertex shaders** ingest CPU‑generated 2D topologies that span screen space in a planar fashion — imagine a mosaic or the cracked surface of a sun‑baked desert, each face a distinct region of the picture’s surface.  
+- The result is passed through an orthographic projection in an otherwise ordinary 2D graphics pipeline.  
+- **Fragment shaders** color and shape this mosaic analogy into something more like a mural or oil painting.
 
-This approach treats the manifest as a compact, metadata‑driven recipe — using little more client-server bandwidth than typical state replication methods — allowing the client to reconstruct the intended view with minimal bandwidth while preserving artistic and spatial fidelity.
+This approach treats the manifest as a compact, metadata‑driven recipe — using little more client-server bandwidth than typical state replication methods — allowing the client to reconstruct the intended view using minimal bandwidth while preserving artistic and spatial fidelity.
 
 ---
 
@@ -71,9 +70,9 @@ Natural Projection is the client‑side realization method for rendering manifes
 
 It’s a spherical‑to‑planar, split‑pipeline method that mirrors human vision by concentrating detail at the center and preserving an undistorted peripheral view — all within a standard 2D client pipeline.
 
-Conventional 3D graphics pipelines treat perspective as a radial projection of world geometry onto a flat plane — a simplification that introduces distortions, especially at wide fields of view.  
+Conventional 3D graphics pipelines treat perspective as a radial projection of world geometry onto a flat near plane — a simplification that introduces distortions, especially at wide fields of view.  
 
-Natural Projection takes a different approach. From the viewpoint, the scene is projected radially onto a sphere’s inner surface (the spherical clipping volume) using viewpoint‑relative (w, x, y, z) coordinates. These spherical viewpoints inherently encode panoramic environment light. The resulting spherical image is then clipped client‑side with an elliptical viewing volume, producing a mosaic‑like rectangular 2D mesh whose faces map directly to shader invocations. Each face also stores its own relative normal vector, enabling accurate lighting and shading calculations in the 2D pipeline. This elliptical projection volume matches the natural curvature of human vision and camera lenses, so when warped to a rectangle, lens distortion is corrected, and render time isn’t wasted on pixels that would be discarded.
+Natural Projection takes a different approach. From the viewpoint, the scene is projected radially onto a sphere’s inner surface (the spherical clipping volume) using viewpoint‑relative (w, x, y, z) coordinates. These spherical viewpoints inherently encode panoramic environment light. The resulting spherical image is then clipped client‑side with an elliptical viewing volume, producing a mosaic‑like rectangular 2D mesh topology whose faces map directly to shader invocations. Each face also stores its own relative normal vector, enabling accurate lighting and shading calculations in the 2D pipeline. This elliptical projection volume matches the natural curvature of human vision and camera lenses, so when warped to a rectangle, lens distortion is corrected, and render time isn’t wasted on pixels that would be discarded.
 
 This CPU‑generated 2D mesh topology then passes through an otherwise standard 2D graphics pipeline, resolved with an orthographic projection. The result is an image where detail is naturally concentrated toward the center — just as in human vision — while the periphery remains stable, undistorted, and lit with the full richness of the captured environment.
 
@@ -86,7 +85,7 @@ Its architecture emerged from the need to:
 
 - Keep the **server authoritative** over simulation truth while minimizing bandwidth by transmitting compact, metadata-centric rendering manifests instead of full‑fidelity world state.
 - Allow **clients** to render scenes locally, interpolate between server‑provided viewpoints, and maintain responsive presentation without compromising consistency.
-- Support **scalable multiplayer environments** where view‑volume‑driven culling and metadata-only rendering manifests ensure efficient rendering pipelines.
+- Support **scalable multiplayer environments** where view‑volume‑driven culling and metadata-only rendering manifests ensure efficient network usage.
 
 ### Integration with QVM
 
