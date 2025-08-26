@@ -87,7 +87,7 @@ Its architecture emerged from the need to:
 - Allow **clients** to render scenes locally, interpolate between server‑provided viewpoints, and maintain responsive presentation without compromising consistency.
 - Support **scalable multiplayer environments** where view‑volume‑driven culling and metadata-only rendering manifests ensure efficient network usage.
 
-### Integration with QVM
+## Integration with QVM
 
 This model is now included in the (QVM) repository as the default client–server reference implementation.  
 It serves as:
@@ -96,15 +96,19 @@ It serves as:
 - A **template** for developers to adapt or extend for their own distributed virtual worlds.
 - A **demonstration** of how QVM can integrate with real‑time rendering and asset resolution.
 
-By shipping this system as part of the QVM repo, it provides both a practical starting point for new projects and a canonical example of QVM’s intended use in interactive, networked environments.
+By shipping this system as part of the QVM repo, it provides a canonical example of QVM’s intended use in interactive, networked environments.
 
 ---
+
+## Rendering Module: Natural Projection (NP)
+
+**Status:** Under evaluation — not integrated in this branch.  
+**Notes:** Placeholder entry for potential future rendering paradigm.  
+Full description, implementation details, and licensing to be added upon validation.
 
 ## Terminology Note:
 
 The term “QVM” is used here as a generic descriptor for a quantum virtual machine architecture.  
 It is not intended to refer to any specific commercial product or trademark.  
-
----
 
 © 2025 thatquantumguy. This document is licensed under the Apache License, Version 2.0. See the [LICENSE](./LICENSE) file for full terms.
