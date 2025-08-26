@@ -69,13 +69,13 @@ This approach treats the manifest as a compact, metadata‑driven recipe — usi
 
 Natural Projection is the client‑side realization method for rendering manifests, designed to preserve perceptual fidelity while using a standard 2D pipeline.
 
-A spherical-to-planar split-pipeline method that mirrors human vision by concentrating detail at the center and preserving undistorted peripheral view, through a standard 2D client pipeline.
+It’s a spherical‑to‑planar, split‑pipeline method that mirrors human vision by concentrating detail at the center and preserving an undistorted peripheral view — all within a standard 2D client pipeline.
 
 Conventional 3D graphics pipelines treat perspective as a radial projection of world geometry onto a flat plane — a simplification that introduces distortions, especially at wide fields of view.  
 
-**Natural Projection** takes a different approach, one that mirrors how we actually see. From the viewpoint, the scene is projected radially onto a sphere's inner surface (the spherical clipping volume), using viewpoint-relative \((w, x, y, z)\) coordinates. The resulting spherical image is then clipped client‑side with an oval‑shaped “frustum”, producing a mural‑like rectangular 2D mesh whose faces map directly to shader invocations.  
+Natural Projection takes a different approach. From the viewpoint, the scene is projected radially onto a sphere’s inner surface (the spherical clipping volume) using viewpoint‑relative (w, x, y, z) coordinates. These spherical viewpoints inherently encode panoramic environment light. The resulting spherical image is then clipped client‑side with an elliptical viewing volume, producing a mosaic‑like rectangular 2D mesh whose faces map directly to shader invocations. Each face also stores its own relative normal vector, enabling accurate lighting and shading calculations in the 2D pipeline. This elliptical projection volume matches the natural curvature of human vision and camera lenses, so when warped to a rectangle, lens distortion is corrected, and render time isn’t wasted on pixels that would be discarded.
 
-This mesh passes through an otherwise standard 2D graphics pipeline, resolved with an orthographic projection. The outcome is an image where detail is naturally concentrated toward the center — just as in human vision — while the periphery remains stable and undistorted.
+This CPU‑generated 2D mesh topology then passes through an otherwise standard 2D graphics pipeline, resolved with an orthographic projection. The result is an image where detail is naturally concentrated toward the center — just as in human vision — while the periphery remains stable, undistorted, and lit with the full richness of the captured environment.
 
 ---
 
