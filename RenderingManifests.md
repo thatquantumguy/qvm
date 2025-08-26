@@ -21,7 +21,7 @@ View‑volume‑driven occlusion culling, omnidirectional perspective projection
 
 ### Client‑Side Rendering
 
-From the client’s perspective, it receives regular **360‑degree views** into world space from the server. Between each next/last pair of such reference points in space/time, it is possible to derive intermediate reference points with the same qualities.  
+From the client’s perspective, it receives regular 360‑degree views into world space from the server. Between each next/last pair of such reference points in space/time, it is possible to derive intermediate reference points with the same qualities.  
 > **Note:** This interpolation does not work with frustum‑culled viewpoints, since the missing peripheral data prevents accurate reconstruction.
 
 ---
@@ -52,14 +52,14 @@ It’s designed for clarity at a glance, ensuring each side’s authority and du
 
 ### Visualizing a Clipped Rendering Manifest
 
-You can picture a **clipped rendering manifest** by starting with a photograph — or better yet, a painting — and then reducing it to the **minimum viable instructions** needed to drive shaders.
+You can picture a **clipped** rendering manifest by starting with a photograph — or better yet, a painting — and then reducing it to the minimum viable metadata needed to drive shaders.
 
 On the client:
 
 - **Vertex shaders** ingest CPU‑generated 2D meshes that cover the client‑local world space in a planar fashion.  
   Think of it as a mural: a flat surface subdivided by targeted shader type, onto which the scene will be painted. 
 - **Fragment shaders** then “paint” onto this mural using volumetric textures, with HDRI-like lighting.
-- The result is passed through an **orthographic projection** in an otherwise ordinary 3D graphics pipeline.
+- The result is passed through an orthographic projection in an otherwise ordinary 2D graphics pipeline.
 
 This approach treats the manifest as a compact, metadata‑driven recipe — using little more client-server bandwidth than typical state replication methods — allowing the client to reconstruct the intended view with minimal bandwidth while preserving artistic and spatial fidelity.
 
@@ -90,14 +90,14 @@ Its architecture emerged from the need to:
 
 ### Integration with QVM
 
-This model is now included in the **(QVM)** repository as the **default client–server reference implementation**.  
+This model is now included in the (QVM) repository as the default client–server reference implementation.  
 It serves as:
 
 - A **baseline networking and rendering pattern** for QVM‑powered simulations and games.
 - A **template** for developers to adapt or extend for their own distributed virtual worlds.
 - A **demonstration** of how QVM can integrate with real‑time rendering and asset resolution.
 
-By shipping this system as part of the QVM repo, it provides both a **practical starting point** for new projects and a **canonical example** of QVM’s intended use in interactive, networked environments.
+By shipping this system as part of the QVM repo, it provides both a practical starting point for new projects and a canonical example of QVM’s intended use in interactive, networked environments.
 
 ---
 
