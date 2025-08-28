@@ -2,7 +2,8 @@
 
 ## Quantum Virtual Machine Conceptual Disclosure  
 **Author:** thatquantumguy  
-**Date:** 24 Aug 2025  
+**First Draft Published:** 24 Aug 2025  
+**Last Updated:** 28 Aug 2025
 
 ---
 
@@ -25,14 +26,14 @@ This disclosure describes a deterministic, infinitely scalable simulation substr
 
 1. **Global Seed Frame (GSF)** — A pristine, syncable ledger of all type‑states.  
 2. **AST/SDF Layering** — Root through inner nodes/octants to leaves, where derivation detail is sufficient to fully resolve local phenomena.  
-3. **Observer‑Scoped Out‑Buffers** — Realized state is generated at the fidelity and scope required for the current query, with Level‑of‑Detail scaling encoded as seed composition depth.  
+3. **Observer‑Scoped Out‑Buffers** — Realized state is generated at the fidelity and scope required for the current query, with Level‑of‑Detail scaling encoded as seed-frame composition depth.  
 4. **Global Transformations** — Vector impulses or rule changes may be applied at the type‑state layer, propagating instantaneously to all present and future derivations.
 
 ---
 
 ## Synchronization & Recovery
 
-- **Seed‑Level Diffing** — Changes are reconciled by comparing and patching minimal AST segments, not bulk state.  
+- **Seed‑Level Diffing** — Changes are reconciled by comparing and patching minimal metadata, not bulk state.  
 - **Error‑Correction Metadata** — Lightweight ECC ensures integrity of seed frames over unreliable networks.  
 - **Rollback/Fork at Frame Level** — Entire realities can be rewound or branched by restoring an earlier GSF.
 
@@ -40,9 +41,10 @@ This disclosure describes a deterministic, infinitely scalable simulation substr
 
 ## Key Properties
 
-- **Effectively Infinite Compute/Storage** — Only seeds and derivation rules are stored; computation occurs only when and where needed.  
+- **Effectively Infinite Compute/Storage** — Stores only seeds and derivation rules, generating derived world state on demand during rendering or ingest operations.  
 - **Global‑Scale Coherency at Minimal Cost** — Mutations can propagate to an infinite lattice using few instructions.  
 - **Dual‑Mode Interpretation** — The same AST can be traversed for semantic meaning or evaluated as a spatial SDF volume.
+- **Broad Applicability** — Features a molecular composition mirroring that of our world, while remaining configurable and scriptable to support complex, high‑fidelity simulations.
 
 ---
 
@@ -68,17 +70,16 @@ This disclosure describes a deterministic, infinitely scalable simulation substr
 
 ## Intended Use
 
-This QVM model serves as the technical foundation for an in-development game platform, targeted for public launch in approximately one year. The same substrate is adaptable to research simulations, distributed virtual worlds, and any domain requiring high‑fidelity, low‑cost synchronization of complex states across endpoints.  Future implementations will be developed under a transparent and collaborative open-source model. The project will be openly licensed under the Apache 2.0 license, inviting and encouraging contributions from the broader community to collectively drive its innovation.
+This QVA/QVM model serves as the technical foundation for an in-development, game platform, targeted for public launch in approximately one year. The same substrate is adaptable to research simulations, distributed virtual worlds, and any domain requiring high‑fidelity, low‑cost synchronization of complex states across endpoints.  Future implementations will be developed under a transparent and collaborative open-source model. The project will be openly licensed under the Apache 2.0 license, inviting and encouraging contributions from the broader community to collectively drive its innovation.
 
 
 ---
 
-## Terminology Note:
+## Terminology Note
 
-The term “QVM” is used here as a generic descriptor for a quantum virtual machine architecture.  
-It is not intended to refer to any specific commercial product or trademark.  
+The acronyms **QVM** (“quantum virtual machine”) and **QVA** (“quantum virtual architecture”) are used here as generic descriptors for abstract concepts in quantum computing.  
+They are not intended to refer to any specific commercial product, implementation, or trademark.
 
 ---
 
-© 2025 thatquantumguy. This README and all contents of this repository are licensed under the Apache License, Version 2.0.  
-See the [LICENSE](./LICENSE) file for full terms.
+© 2025 thatquantumguy.  This README and all contents of this repository are licensed under the Apache License, Version 2.0.  See the [LICENSE](./LICENSE) file for full terms.
