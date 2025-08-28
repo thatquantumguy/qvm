@@ -1,5 +1,7 @@
 ## Client-Server Rendering Manifest (Conceptual Overview)
 
+
+
 ### Context
 In the system for which this approach was conceived, every type the server evaluates is a packed index into something else — whether that’s a function in an L1‑cache‑resident, work‑queue‑native kernel instance, or a rich volumetric texture in client VRAM.
 
@@ -115,4 +117,4 @@ They are not intended to refer to any specific commercial product, implementatio
 
 ---
 
-© 2025 thatquantumguy.  This README and all contents of this repository are licensed under the Apache License, Version 2.0.  See the [LICENSE](./LICENSE) file for full terms.
+© 2025 thatquantumguy.  This document and all contents of this repository are licensed under the Apache License, Version 2.0.  See the [LICENSE](./LICENSE) file for full terms.
