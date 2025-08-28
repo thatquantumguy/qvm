@@ -1,6 +1,8 @@
 ## Client-Server Rendering Manifest (Conceptual Overview)
 
-
+Published 25 Aug 2025.  
+Updated 28 Aug 2025.  
+Companion repository "https://github.com/thatquantumguy/qva"
 
 ### Context
 In the system for which this approach was conceived, every type the server evaluates is a packed index into something else — whether that’s a function in an L1‑cache‑resident, work‑queue‑native kernel instance, or a rich volumetric texture in client VRAM.
