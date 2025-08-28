@@ -1,4 +1,4 @@
-## Client‑Server Rendering Manifest (Conceptual Overview)
+## Client-Server Rendering Manifest (Conceptual Overview)
 
 ### Context
 In the system for which this approach was conceived, every type the server evaluates is a packed index into something else — whether that’s a function in an L1‑cache‑resident, work‑queue‑native kernel instance, or a rich volumetric texture in client VRAM.
@@ -26,12 +26,12 @@ From the client’s perspective, it receives regular 360‑degree views into wor
 
 ---
 
-### Client‑Side Process (In Practice)
+### Client-Side Process (In Practice)
 
 1. **Interpolation Authority** – Maintain authority over interpolation between active viewpoint pairs, ensuring smooth motion and responsiveness without waiting for server updates.  
-2. **Local Clipping Authority** – Determine clipping planes for rendering, allowing efficient culling of non‑visible viewpoint metadata in the current view.  
+2. **Local Clipping Authority** – Determine clipping volume for rendering, allowing efficient culling of non-visible viewpoint metadata in the current view.  
 3. **Local Orientation Control** – Manage pitch, yaw, and roll locally for immediate camera response.  
-4. **State Relay to Server** – Send locally determined values (clipping, orientation, interpolation state) to a predictive server‑side handler for integration into future manifest generation.  
+4. **State Relay to Server** – Send locally determined values (clipping, orientation, interpolation state) to a predictive server-side handler for integration into future manifest generation.  
 5. **No Simulation Authority** – While controlling presentation and interpolation, defer simulation truth to the server to ensure consistency across all connected clients.
 
 ## Division of Responsibilities
@@ -42,10 +42,10 @@ It’s designed for clarity at a glance, ensuring each side’s authority and du
 | **Server Responsibilities** | **Client Responsibilities** |
 |------------------------------|------------------------------|
 | Maintain authoritative simulation state in approximated world space. | Maintain authoritative interpolation between active viewpoint pairs. |
-| Perform view‑volume‑driven occlusion culling and omnidirectional perspective projection. | Apply local clipping authority to cull non‑visible viewpoint metadata within the current view. |
+| Perform view‑volume‑driven occlusion culling and radial perspective projection. | Apply local clipping authority to cull non‑visible viewpoint metadata within the current view. |
 | Derive metadata (material subscripts, lighting data, normals, topology) from selected geometry. | Control local pitch, yaw, and roll for immediate camera responsiveness. |
-| Compile, compress, and package rendering manifests into a network‑efficient form. | Resolve server‑provided indices into local assets and shader parameters. |
-| Collate and batch transmit manifests at a consistent rate, preferring UDP where possible. | Relay local orientation, clipping, interpolation and other input state to the server’s predictive handler. |
+| Collate, compress, and buffer rendering manifests into regular network‑efficient transmissions. | Resolve server‑provided indices into local assets and shader parameters. |
+| Manage per-client synchronization runlevel per network health telemetry. | Relay local orientation, clipping, interpolation and other input state to the server’s predictive handler. |
 | Remain authoritative over simulation truth and validate all client inputs. | Render the scene as metadata derived, CPU generated 2D topology without altering simulation truth. |
 
 ---
@@ -66,15 +66,17 @@ This approach treats the manifest as a compact, metadata‑driven recipe — usi
 
 ## Natural Projection
 
-Natural Projection is the client‑side realization method for rendering manifests, designed to preserve perceptual fidelity while using a standard 2D pipeline.
+Natural Projection is the client‑side realization method for rendering manifests, designed to preserve perceptual fidelity within a standard 2D pipeline.
 
-It’s a spherical‑to‑planar, split‑pipeline method that mirrors human vision by concentrating detail at the center and preserving an undistorted peripheral view — all within a standard 2D client pipeline.
+It’s a spherical‑to‑planar, split‑pipeline approach that mirrors human vision — concentrating detail at the center while preserving an undistorted peripheral view.
 
-Conventional 3D graphics pipelines treat perspective as a radial projection of world geometry onto a flat near plane — a simplification that introduces distortions, especially at wide fields of view.  
+Conventional 3D pipelines treat perspective as a radial projection of world geometry onto a flat near‑plane. This simplification often introduces distortion, especially at wide fields of view.
 
-Natural Projection takes a different approach. From the viewpoint, the scene is projected radially onto a sphere’s inner surface (the spherical clipping volume) using viewpoint‑relative (w, x, y, z) coordinates. These spherical viewpoints inherently encode panoramic environment light. The resulting spherical image is then clipped client‑side with an elliptical viewing volume, producing a mosaic‑like rectangular 2D mesh topology whose faces map directly to shader invocations. Each face also stores its own relative normal vector, enabling accurate lighting and shading calculations in the 2D pipeline. This elliptical projection volume matches the natural curvature of human vision and camera lenses, so when warped to a rectangle, lens distortion is corrected, and render time isn’t wasted on pixels that would be discarded.
+Natural Projection instead projects the scene radially onto the inner surface of a sphere (the spherical clipping volume) using viewpoint‑relative (w, x, y, z) coordinates. These spherical viewpoints inherently encode panoramic environment light. The resulting cube‑map image is clipped client‑side with a hemispherical viewing volume, producing a mosaic‑like square 2D mesh topology whose faces map directly to shader invocations. The result: a perceptually correct 180‑degree field of view.
 
-This CPU‑generated 2D mesh topology then passes through an otherwise standard 2D graphics pipeline, resolved with an orthographic projection. The result is an image where detail is naturally concentrated toward the center — just as in human vision — while the periphery remains stable, undistorted, and lit with the full richness of the captured environment.
+Each mesh face stores viewpoint‑relative normal vectors, enabling accurate lighting and shading in the 2D pipeline using captured server‑side lighting metadata. The hemispherical projection volume matches the natural curvature of human vision and camera lenses, so when warped to a square, lens distortion is corrected and render time isn’t wasted on pixels that would be discarded.
+
+This rendering‑manifest‑derived, CPU‑generated mesh topology — defining groupings of shader invocations — then passes through an otherwise standard 2D graphics pipeline, resolved with an orthographic projection. The output image concentrates detail at the center, as in human vision, while the periphery remains stable, undistorted, and lit with the full richness of the captured environment.
 
 ---
 
@@ -87,28 +89,30 @@ Its architecture emerged from the need to:
 - Allow **clients** to render scenes locally, interpolate between server‑provided viewpoints, and maintain responsive presentation without compromising consistency.
 - Support **scalable multiplayer environments** where view‑volume‑driven culling and metadata-only rendering manifests ensure efficient network usage.
 
-## Integration with QVM
+## Integration with QVM/QVA
 
-This model is now included in the (QVM) repository as the default client–server reference implementation.  
+This model is now included in the /qvm/ and /qva/ repositories as a default client–server reference implementation.  
 It serves as:
 
-- A **baseline networking and rendering pattern** for QVM‑powered simulations and games.
+- A **baseline networking and rendering pattern** for QVA/QVM‑powered simulations and games.
 - A **template** for developers to adapt or extend for their own distributed virtual worlds.
 - A **demonstration** of how QVM can integrate with real‑time rendering and asset resolution.
 
-By shipping this system as part of the QVM repo, it provides a canonical example of QVM’s intended use in interactive, networked environments.
+By shipping this system as part these repos, it provides a canonical example of QVA/QVM’s intended use in interactive, networked environments.
 
 ---
 
 ## Rendering Module: Natural Projection (NP)
 
 **Status:** Under evaluation — not integrated in this branch.  
-**Notes:** Placeholder entry for potential future rendering paradigm.  
+**Notes:** Reserved for potential future rendering paradigm.  
 Full description, implementation details, and licensing to be added upon validation.
 
-## Terminology Note:
+## Terminology Note
 
-The term “QVM” is used here as a generic descriptor for a quantum virtual machine architecture.  
-It is not intended to refer to any specific commercial product or trademark.  
+The acronyms **QVM** (“quantum virtual machine”) and **QVA** (“quantum virtual architecture”) are used here as generic descriptors for abstract concepts in quantum computing.  
+They are not intended to refer to any specific commercial product, implementation, or trademark.
 
-© 2025 thatquantumguy. This document is licensed under the Apache License, Version 2.0. See the [LICENSE](./LICENSE) file for full terms.
+---
+
+© 2025 thatquantumguy.  This README and all contents of this repository are licensed under the Apache License, Version 2.0.  See the [LICENSE](./LICENSE) file for full terms.
